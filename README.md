@@ -4,7 +4,7 @@
 
 Welcome to this GitHub repo that will allow you to easily launch your collection of NFTs (Smart Contract and Minting WebSite).
 
-## Partie Smart Contract (./backend)
+## Smart Contract Part (./backend)
 
 This DApp uses the Hardhat-deploy plugin.
 
@@ -42,7 +42,7 @@ Deploy on the Mainnet (Contract verification is automatic) (at your own risk, un
 
 ```yarn hardhat deploy --network mainnet```
 
-## Partie Site de Mint (./frontend)
+## Mint Website Part (./frontend)
 
 First launch the local blockchain hardhat (folder ./backend) :
 
