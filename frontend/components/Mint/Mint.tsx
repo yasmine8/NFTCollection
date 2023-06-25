@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState,ReactNode} from 'react'
 import { Flex, Text, Image, Button, useToast, Spinner } from '@chakra-ui/react';
 import * as abiInfos from '../../constants'
 import { ethers } from 'ethers'
 import { useSigner } from 'wagmi'
 
-function Mint({ getDatas, totalSupply }) {
+interface Props {
+    getDatas?: ReactNode
+    totalSupply?: ReactNode
+    // any props that come into the component
+  }
+function Mint({ getDatas, totalSupply }:Props) {
 
     const { data: signer } = useSigner()
     const toast = useToast()
@@ -15,9 +20,9 @@ function Mint({ getDatas, totalSupply }) {
         setIsMinting(true)
         try {
             let overrides = {
-                value: ethers.utils.parseEther(process.env.NEXT_PUBLIC_PRICE).mul(numberOfNFTs)
+                value: ethers.utils.parseEther(process.env.NEXT_PUBLIC_PRICE || '0').mul(numberOfNFTs)
             }
-            const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS, abiInfos.abi, signer);
+            const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abiInfos.abi, signer);
             let transaction = await contract.mint(numberOfNFTs, overrides)
             await transaction.wait()
             getDatas()
