@@ -4,12 +4,8 @@ import * as abiInfos from '../../constants'
 import { ethers } from 'ethers'
 import { useSigner } from 'wagmi'
 
-interface Props {
-    getDatas?: ReactNode
-    totalSupply?: ReactNode
-    // any props that come into the component
-  }
-function Mint({ getDatas, totalSupply }:Props) {
+
+function Mint({ getDatas, totalSupply }:any) {
 
     const { data: signer } = useSigner()
     const toast = useToast()
@@ -19,6 +15,7 @@ function Mint({ getDatas, totalSupply }:Props) {
     const Mint = async(numberOfNFTs: number) => {
         setIsMinting(true)
         try {
+            if (signer) {
             let overrides = {
                 value: ethers.utils.parseEther(process.env.NEXT_PUBLIC_PRICE || '0').mul(numberOfNFTs)
             }
@@ -33,6 +30,7 @@ function Mint({ getDatas, totalSupply }:Props) {
                 duration: 5000,
                 isClosable: true,
             })
+        }
         }
         catch(e) {
             console.log(e)
