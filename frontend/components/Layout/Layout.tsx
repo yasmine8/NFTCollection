@@ -1,9 +1,12 @@
-import React from 'react'
+import React , { ReactNode } from 'react'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import { Flex } from '@chakra-ui/react'
-
-function Layout({ children }) {
+interface Props {
+  children?: ReactNode
+  // any props that come into the component
+}
+function Layout({ children }: Props) {
   return (
     <Flex
         h="100vh"
