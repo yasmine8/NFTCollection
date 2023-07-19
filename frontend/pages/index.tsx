@@ -7,10 +7,17 @@ import { useAccount, useProvider } from 'wagmi'
 import { Text, useToast } from '@chakra-ui/react'
 import * as abiInfos from '../constants'
 import { ethers } from 'ethers'
+import * as dotenv from "dotenv"
 
 export default function Home() {
 
   const contract_address = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
+  const saleStartTime = process.env.NEXT_PUBLIC_SALESTARTTIME || undefined || 0;
+  let startTime = 0;
+  if (saleStartTime!=='undefined') {
+    startTime = +saleStartTime;
+  }
+  const some = 123;
   const { address, isConnected } = useAccount()
   const provider = useProvider()
 
@@ -31,7 +38,7 @@ export default function Home() {
   }
 
   const calculateSaleStartDate = (): string => {
-    let a = new Date(process.env.NEXT_PUBLIC_SALESTARTTIME * 1000);
+    let a = new Date(startTime * 1000);
     let months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
     let year = a.getFullYear();
     let month = months[a.getMonth()];
@@ -52,7 +59,7 @@ export default function Home() {
       </Head>
       <Layout>
         {isConnected ? (
-          Math.floor(Date.now() / 1000) > parseInt(process.env.NEXT_PUBLIC_SALESTARTTIME) ? (
+          Math.floor(Date.now() / 1000) > startTime ? (
             <Mint getDatas={getDatas} totalSupply={totalSupply} />
           ) : (
             <Text>The sale start at {saleStartTimeDateFormat}.</Text>
