@@ -10,6 +10,7 @@ import { ethers } from 'ethers'
 
 export default function Home() {
 
+  const contract_address = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "";
   const { address, isConnected } = useAccount()
   const provider = useProvider()
 
@@ -24,7 +25,7 @@ export default function Home() {
   }, [isConnected])
 
   const getDatas = async() => {
-    const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS, abiInfos.abi, provider);
+    const contract = new ethers.Contract(contract_address, abiInfos.abi, provider);
     let totalSupply = await contract.totalSupply()
     setTotalSupply(parseInt(totalSupply.toString()))
   }
